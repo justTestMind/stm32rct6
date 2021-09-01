@@ -67,6 +67,7 @@ int main(void){
 		//gpio_clear(GPIOA,GPIO3);
         delay_ms(3000);
 		gpio_toggle(GPIOC,GPIO2);
+		
 
         //gpio_toggle(GPIOA,GPIO3);
 
