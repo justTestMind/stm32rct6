@@ -12,6 +12,8 @@
 #include "./usart.h"
 #include "./bsp_beep.h"
 #include "./bsp_key.h"
+#include "./bsp_mcooutput.h"
+#include "./bsp_exti.h"
 
 int main(void){
     rcc_clock_setup_in_hse_8mhz_out_72mhz();
@@ -19,9 +21,38 @@ int main(void){
 	gpio_set_mode(GPIOC,GPIO_MODE_OUTPUT_50_MHZ,GPIO_CNF_OUTPUT_PUSHPULL,GPIO2);
     usart_setup();
 	//TestDHT11();
-	TestBeep();
+	//TestBeep();
 	//TestKey();
+	//TestMCO();
+	TestExti();
 }
+
+void TestExti(){
+	EXTI_Key_Config();
+	
+	while (1)
+    {
+		gpio_toggle(GPIOC,GPIO2);
+		delay_ms(3000);
+		gpio_toggle(GPIOC,GPIO2);
+		delay_ms(3000);
+	}
+}
+void TestMCO(){
+
+	MCO_GPIO_Config();
+	rcc_set_mco(RCC_CFGR_MCO_HSE);
+	while (1)
+    {
+
+	
+		gpio_toggle(GPIOC,GPIO2);
+		delay_ms(3000);
+		gpio_toggle(GPIOC,GPIO2);
+		delay_ms(3000);
+	}
+}
+
 
 void TestKey(){
 	Key_GPIO_Config();
