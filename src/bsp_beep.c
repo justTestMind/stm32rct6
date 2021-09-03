@@ -10,7 +10,7 @@ void BEEP_GPIO_Config(void)
 {
     rcc_periph_clock_enable(BEEP_GPIO_CLK);
 	gpio_set_mode(BEEP_GPIO_PORT, GPIO_MODE_OUTPUT_50_MHZ,
-		      GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, BEEP_GPIO_PIN);
+		      GPIO_CNF_OUTPUT_PUSHPULL, BEEP_GPIO_PIN);
 	gpio_clear(BEEP_GPIO_PORT,BEEP_GPIO_PIN);
 }
 void BEEP(int status)
