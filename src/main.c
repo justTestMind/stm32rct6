@@ -17,14 +17,15 @@
 
 int main(void){
     rcc_clock_setup_in_hse_8mhz_out_72mhz();
-	rcc_periph_clock_enable(RCC_GPIOC);
-	gpio_set_mode(GPIOC,GPIO_MODE_OUTPUT_50_MHZ,GPIO_CNF_OUTPUT_PUSHPULL,GPIO2);
+	//nvic_enable_irq(NVIC_TIM2_IRQ);
     usart_setup();
-	//TestDHT11();
+	delay_ms(1000);
+	printf("main 温度 \r\n");
+	TestDHT11();
 	//TestBeep();
 	//TestKey();
 	//TestMCO();
-	TestExti();
+	//TestExti();
 }
 
 void TestExti(){
@@ -32,10 +33,10 @@ void TestExti(){
 	
 	while (1)
     {
-		gpio_toggle(GPIOC,GPIO2);
-		delay_ms(3000);
-		gpio_toggle(GPIOC,GPIO2);
-		delay_ms(3000);
+		gpio_toggle(GPIOA,GPIO8);
+		delay_ms(5000);
+		gpio_toggle(GPIOA,GPIO8);
+		delay_ms(5000);
 	}
 }
 void TestMCO(){
@@ -56,16 +57,20 @@ void TestMCO(){
 
 void TestKey(){
 	Key_GPIO_Config();
+	
 	while (1)
     {
 		if(Key_Scan(KEY1_GPIO_PORT,KEY1_GPIO_PIN) == KEY_ON){
-			gpio_toggle(GPIOC,GPIO2);
+			gpio_toggle(EFFECT_GPIO_PORT,EFFECT_GPIO_PIN);
 		}
 	}
 }
-
+/**
+*测试蜂鸣器
+**/
 void TestBeep(void){
 	BEEP_GPIO_Config();
+	//gpio_set_mode(GPIOC,GPIO_MODE_OUTPUT_50_MHZ,GPIO_CNF_OUTPUT_PUSHPULL,GPIO2);
 	while (1)
     {
 
@@ -82,13 +87,14 @@ void TestBeep(void){
 
 void TestDHT11(void){
 	uint8_t tempetature,humidity;
-	DHT11_Init();
+	rcc_periph_clock_enable(GPIOA);
+	gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ,
+				  GPIO_CNF_OUTPUT_PUSHPULL, GPIO8);
 	while (1)
     {
         DHT11_Read_Data(&tempetature,&humidity);
         printf("温度： %d \r\n 湿度3: %d  \r\n",tempetature,humidity);
-        delay_ms(3000);
-		gpio_toggle(GPIOC,GPIO2);
+		gpio_toggle(GPIOA,GPIO8);
 
     }
 }
