@@ -15,9 +15,14 @@
 #include "./bsp_mcooutput.h"
 #include "./bsp_exti.h"
 
+
+
+
 int main(void){
     rcc_clock_setup_in_hse_8mhz_out_72mhz();
 	//nvic_enable_irq(NVIC_TIM2_IRQ);
+	//rcc_set_rtc_clock_source(RCC_PLL);
+	
     usart_setup();
 	delay_ms(1000);
 	printf("main 温度 \r\n");
