@@ -22,9 +22,6 @@ int main(void){
     rcc_clock_setup_in_hse_8mhz_out_72mhz();
 	//nvic_enable_irq(NVIC_TIM2_IRQ);
 	//rcc_set_rtc_clock_source(RCC_PLL);
-	// RCC_CFGR = (RCC_CFGR & ~RCC_CFGR_MCO_HSE) |
-	// 		(clk << RCC_CFGR_SW_SHIFT);
-	
 	
     usart_setup();
 	delay_ms(1000);
@@ -95,14 +92,10 @@ void TestBeep(void){
 
 void TestDHT11(void){
 	uint8_t tempetature,humidity;
-	rcc_periph_clock_enable(GPIOA);
-	gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ,
-				  GPIO_CNF_OUTPUT_PUSHPULL, GPIO8);
+
 	while (1)
     {
         DHT11_Read_Data(&tempetature,&humidity);
-        printf("温度： %d \r\n 湿度3: %d  \r\n",tempetature,humidity);
-		gpio_toggle(GPIOA,GPIO8);
-
+        printf("温度： %d\t 湿度: %d\n",tempetature,humidity);
     }
 }

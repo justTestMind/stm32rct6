@@ -4,15 +4,9 @@
 #include "./delay.h"
 #include <stdio.h>
 
-uint16_t DHT11_DQ_IN(bool print)
+uint16_t DHT11_DQ_IN()
 {
     int32_t data = gpio_get(DHT11_GPIO_PORT, DHT11_GPIO_PIN);
-    if (print)
-    {
-        printf("GPIO 电平情况  %d \r\n", data);
-        printf("DHT11_GPIO_PIN 的值   %d \r\n", DHT11_GPIO_PIN);
-    }
-
     return (data & DHT11_GPIO_PIN) > 0 ? 1 : 0;
 }
 
@@ -29,48 +23,34 @@ void DHT11_IO_IN(void)
 
 void DHT11_Rst(void)
 {
-    printf("dht11 重置 \r\n");
-    
     rcc_periph_clock_enable(DHT11_GPIO_CLK);
     DHT11_IO_OUT();
+    //延时3秒 避免读取太频繁
     gpio_set(DHT11_GPIO_PORT, DHT11_GPIO_PIN);
-    printf("越过不稳定状态 %d \r\n", DHT11_DQ_IN(true));
     delay_ms(3000);
+    //主机发送开始信号
     gpio_clear(DHT11_GPIO_PORT, DHT11_GPIO_PIN);
-    printf("主机发开始信号 %d \r\n", DHT11_DQ_IN(true));
-    delay_ms(28);
-    // delay_ms(3000);
+    delay_ms(20);
+    //拉高并延时等待
     gpio_set(DHT11_GPIO_PORT, DHT11_GPIO_PIN);
-    printf("主机拉高 %d \r\n", DHT11_DQ_IN(true));
     delay_us(30);
-    //      delay_ms(3000);
-    //     printf("准备切换输入模式");
-    //      DHT11_IO_IN();
-    //  printf("输入模式中取值 %d \r\n",DHT11_DQ_IN(true));
-
-    //     delay_ms(3000);
 }
 //接收
 uint8_t DHT11_Check(void)
 {
     uint8_t retry = 0;
     DHT11_IO_IN();
-    printf("当前电平信息 %d \r\n", DHT11_DQ_IN(true));
-
-    while (DHT11_DQ_IN(false) && retry < 100)
+    while (DHT11_DQ_IN() && retry < 100)
     {
         retry++;
         delay_us(1);
     }
     if (retry >= 100)
     {
-        printf("期望dht响应信号  当前电平信息 %d \r\n", DHT11_DQ_IN(false));
         return 1;
     }
-
-    printf(" %d us 后收到dht响应信号;当前电平信息 %d\r\n", retry, DHT11_DQ_IN(false));
     retry = 0;
-    while (!DHT11_DQ_IN(false) && retry < 100)
+    while (!DHT11_DQ_IN() && retry < 100)
     {
         retry++;
         delay_us(1);
@@ -78,7 +58,6 @@ uint8_t DHT11_Check(void)
 
     if (retry >= 100)
     {
-        printf("期望Dht拉高  当前电平信息 %d \r\n", DHT11_DQ_IN(false));
         return 1;
     }
 
@@ -88,20 +67,20 @@ uint8_t DHT11_Check(void)
 uint8_t DHT11_Read_Bit(void)
 {
     uint8_t retry = 0;
-    while (DHT11_DQ_IN(false) && retry < 100)
+    while (DHT11_DQ_IN() && retry < 100)
     {
         retry++;
         delay_us(1);
     }
 
     retry = 0;
-    while (!DHT11_DQ_IN(false) && retry < 100)
+    while (!DHT11_DQ_IN() && retry < 100)
     {
         retry++;
         delay_us(1);
     }
     delay_us(40);
-    if (DHT11_DQ_IN(false))
+    if (DHT11_DQ_IN())
         return 1;
     else
         return 0;
@@ -116,8 +95,6 @@ uint8_t DHT11_Read_Byte(void)
         dat <<= 1;
         dat |= DHT11_Read_Bit();
     }
-    printf("当前 dat %d \r\n", dat);
-
     return dat;
 }
 

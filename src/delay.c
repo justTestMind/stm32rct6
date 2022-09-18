@@ -7,6 +7,7 @@
 void delay_setup(void)
 {
 	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
+	systick_clear();
 }
 
 void delay_us(uint16_t us) {
