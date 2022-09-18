@@ -16,7 +16,7 @@ static void gpio_setup(void)
 	rcc_periph_clock_enable(KEY2_GPIO_CLK);
 	gpio_set_mode(KEY2_GPIO_PORT, GPIO_MODE_OUTPUT_50_MHZ,
 		      GPIO_CNF_OUTPUT_PUSHPULL, KEY2_GPIO_PIN);
-			  gpio_clear(KEY2_GPIO_PORT,KEY2_GPIO_PIN);
+	gpio_clear(KEY2_GPIO_PORT,KEY2_GPIO_PIN);
 }
 
 static void exti_setup(void)

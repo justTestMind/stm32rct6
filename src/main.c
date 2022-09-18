@@ -22,6 +22,9 @@ int main(void){
     rcc_clock_setup_in_hse_8mhz_out_72mhz();
 	//nvic_enable_irq(NVIC_TIM2_IRQ);
 	//rcc_set_rtc_clock_source(RCC_PLL);
+	// RCC_CFGR = (RCC_CFGR & ~RCC_CFGR_MCO_HSE) |
+	// 		(clk << RCC_CFGR_SW_SHIFT);
+	
 	
     usart_setup();
 	delay_ms(1000);
