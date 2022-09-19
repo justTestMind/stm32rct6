@@ -293,7 +293,7 @@ void OLED_ShowChar(uint16_t x,uint16_t y,uint16_t chr,uint16_t size1,uint16_t mo
 //size1:起点坐标
 //*chr:字符串起始地址
 //mode:0,反色显示;1,正常显示
-void OLED_ShowString(uint16_t x,uint16_t y,uint16_t *chr,uint16_t size1,uint16_t mode)
+void OLED_ShowString(uint16_t x,uint16_t y,uint8_t *chr,uint16_t size1,uint16_t mode)
 {
 	while((*chr>=' ')&&(*chr<='~'))//ÅÐ¶ÏÊÇ²»ÊÇ·Ç·¨×Ö·û!
 	{

@@ -42,7 +42,7 @@ void OLED_DrawLine(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t mode
 void OLED_DrawCircle(uint16_t x,uint16_t y,uint16_t r);
 void OLED_ShowChar(uint16_t x,uint16_t y,uint16_t chr,uint16_t size1,uint16_t mode);
 void OLED_ShowChar6x8(uint16_t x,uint16_t y,uint16_t chr,uint16_t mode);
-void OLED_ShowString(uint16_t x,uint16_t y,uint16_t *chr,uint16_t size1,uint16_t mode);
+void OLED_ShowString(uint16_t x,uint16_t y,uint8_t *chr,uint16_t size1,uint16_t mode);
 void OLED_ShowNum(uint16_t x,uint16_t y,uint32_t num,uint16_t len,uint16_t size1,uint16_t mode);
 void OLED_ShowChinese(uint16_t x,uint16_t y,uint16_t num,uint16_t size1,uint16_t mode);
 void OLED_ScrollDisplay(uint16_t num,uint16_t space,uint16_t mode);
