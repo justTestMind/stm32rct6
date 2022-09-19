@@ -36,7 +36,6 @@ int main(void)
 void TestOLED()
 {
 
-	
 	uint16_t t = ' ';
 	delay_setup();
 	OLED_Init();
