@@ -3,7 +3,7 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/timer.h>
 #include <libopencm3/cm3/systick.h>
-
+//初始化时钟
 void delay_setup(void)
 {
 	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
