@@ -255,9 +255,10 @@ void OLED_DrawCircle(uint16_t x,uint16_t y,uint16_t r)
 //y:0~63
 //size1:选择字体 6x8/6x12/8x16/12x24
 //mode:0,反色显示;1,正常显示 
-void OLED_ShowChar(uint16_t x,uint16_t y,uint16_t chr,uint16_t size1,uint16_t mode)
+void OLED_ShowChar(uint16_t x,uint16_t y,uint8_t chr,uint16_t size1,uint16_t mode)
 {
-	uint16_t i,m,temp,size2,chr1;
+	uint16_t i,m,temp,size2;
+	uint8_t chr1;
 	uint16_t x0=x,y0=y;
 	if(size1==8)size2=6;
 	else size2=(size1/8+((size1%8)?1:0))*(size1/2);  //得到字体一个字符对应点阵集所占的字节数
@@ -418,7 +419,7 @@ void OLED_ScrollDisplay(uint16_t num,uint16_t space,uint16_t mode)
 //sizex,sizey,图片长度
 //BMP[]:要写入的图片数组
 //mode:0,反色显示; 1,正常显示
-void OLED_ShowPicture(uint16_t x,uint16_t y,uint16_t sizex,uint16_t sizey,uint16_t BMP[],uint16_t mode)
+void OLED_ShowPicture(uint16_t x,uint16_t y,uint16_t sizex,uint16_t sizey,uint8_t BMP[],uint16_t mode)
 {
 	uint16_t j=0;
 	uint16_t i,n,temp,m;

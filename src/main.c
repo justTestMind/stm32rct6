@@ -45,7 +45,10 @@ void TestOLED()
 	{
 		OLED_ShowPicture(0,0,128,64,BMP1,1);
 		OLED_Refresh();
-		delay_ms(1000);
+		delay_ms(3000);
+		OLED_ShowPicture(0,0,128,64,BMP2,1);
+		OLED_Refresh();
+		delay_ms(3000);
 		OLED_Clear();
 		OLED_ShowChinese(0, 0, 0, 16, 1);	//中
 		OLED_ShowChinese(18, 0, 1, 16, 1);	//景
