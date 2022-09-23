@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "gpio.h": "c",
-        "rcc.h": "c"
+        "rcc.h": "c",
+        "usart.h": "c"
     }
 }

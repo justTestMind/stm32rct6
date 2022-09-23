@@ -7,12 +7,13 @@
 void delay_setup(void)
 {
 	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
-	systick_clear();
+	
 }
 
 void delay_us(uint16_t us) {
 	delay_setup();
     systick_set_reload(72);
+	systick_clear();
 	systick_interrupt_enable();
 	systick_counter_enable();
 	for (int i = 0; i < us; i++)
@@ -30,6 +31,7 @@ void delay_us(uint16_t us) {
 void delay_ms(uint16_t ms) {
 	delay_setup();
     systick_set_reload(72000);
+	systick_clear();
 	systick_interrupt_enable();
 	systick_counter_enable();
 	for (int i = 0; i < ms; i++)
