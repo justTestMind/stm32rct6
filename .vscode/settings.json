@@ -2,6 +2,7 @@
     "files.associations": {
         "gpio.h": "c",
         "rcc.h": "c",
-        "usart.h": "c"
+        "usart.h": "c",
+        "stdio.h": "c"
     }
 }

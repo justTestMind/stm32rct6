@@ -17,6 +17,8 @@
 #include "./oled.h"
 #include "./bmp.h"
 
+#include "./usart_dma/usart_dma.h"
+
 int main(void)
 {
 	rcc_clock_setup_in_hse_8mhz_out_72mhz();
@@ -25,12 +27,51 @@ int main(void)
 
 	usart_setup();
 	delay_ms(1000);
-	//TestDHT11();
-	// TestBeep();
-	// TestKey();
-	// TestMCO();
-	// TestExti();
-	TestOLED();
+	// TestDHT11();
+	//  TestBeep();
+	//  TestKey();
+	//  TestMCO();
+	//  TestExti();
+	// TestOLED();
+	//test_usart();
+	test_usart_dma();
+}
+
+void test_usart(void)
+{
+	uint8_t tempetature, humidity;
+	gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO8);
+	
+	while (1)
+	{
+
+		printf("hello world \r\n");
+		// TestDHT11();
+		delay_ms(1000);
+		char t = usart_recv_blocking(USART1);
+		// if (t == 49)
+		// {
+		// 	gpio_clear(GPIOA, GPIO8);
+		// }
+		// else if (t == 50)
+		// {
+		// 	gpio_set(GPIOA, GPIO8);
+		// }
+
+		switch (t)
+		{
+			case '1':
+				gpio_set(GPIOA, GPIO8);
+				break;
+			case '2':
+				gpio_clear(GPIOA, GPIO8);
+				break;
+			default:
+				break;
+		}
+
+		printf("rct6 收到指令 %x \r\n", t);
+	}
 }
 
 void TestOLED()
@@ -43,10 +84,10 @@ void TestOLED()
 	OLED_DisplayTurn(0); // 0正常显示 1 屏幕翻转显示
 	while (1)
 	{
-		OLED_ShowPicture(0,0,128,64,BMP1,1);
+		OLED_ShowPicture(0, 0, 128, 64, BMP1, 1);
 		OLED_Refresh();
 		delay_ms(3000);
-		OLED_ShowPicture(0,0,128,64,BMP2,1);
+		OLED_ShowPicture(0, 0, 128, 64, BMP2, 1);
 		OLED_Refresh();
 		delay_ms(3000);
 		OLED_Clear();
