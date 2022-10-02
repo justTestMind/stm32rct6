@@ -3,6 +3,10 @@
         "gpio.h": "c",
         "rcc.h": "c",
         "usart.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "flash.h": "c",
+        "spi.h": "c",
+        "spi_common_v1.h": "c",
+        "spi_common_all.h": "c"
     }
 }

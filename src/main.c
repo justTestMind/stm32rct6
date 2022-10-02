@@ -16,12 +16,15 @@
 #include "./bsp_exti.h"
 #include "./oled.h"
 #include "./bmp.h"
+#include "./rc522/rc522.h"
 
 #include "./usart_dma/usart_dma.h"
 
 int main(void)
 {
 	rcc_clock_setup_in_hse_8mhz_out_72mhz();
+
+	rcc_periph_clock_enable(RCC_SPI1);
 	// nvic_enable_irq(NVIC_TIM2_IRQ);
 	// rcc_set_rtc_clock_source(RCC_PLL);
 
@@ -34,7 +37,67 @@ int main(void)
 	//  TestExti();
 	// TestOLED();
 	//test_usart();
-	test_usart_dma();
+	//test_usart_dma();
+	testrc522();
+}
+
+void testrc522(void){
+	//https://github.com/acoolbest/SPI_RC522_STM32/blob/master/User/main.c
+	uint8_t i;
+	uint8_t Card_Type1[2];
+	uint8_t Card_ID[4];
+	uint8_t Card_KEY[6] = {0xff,0xff,0xff,0xff,0xff,0xff};    //{0x11,0x11,0x11,0x11,0x11,0x11};   //密码
+	uint8_t Card_Data[16];
+	uint8_t status;
+	uint8_t addr;
+	printf("要开始读卡了 \r\n");
+	PcdReset();
+	PcdAntennaOff();
+	delay_ms(2);
+	PcdAntennaOn();
+
+	while(1)
+	{
+		printf("要开始读卡了111  \r\n");
+		delay_ms(1000);
+		if(MI_OK==PcdRequest(PICC_REQALL, Card_Type1))
+		{
+			uint16_t cardType = (Card_Type1[0]<<8)|Card_Type1[1];
+			//sprintf(print_buf, "Card Type(0x%04X):",cardType);
+			printf("Card Type(0x%04X):",cardType);
+			switch(cardType){
+			case 0x4400:
+					printf("Mifare UltraLight \r\n");
+					break;
+			case 0x0400:
+					printf("Mifare One(S50) \r\n");
+					break;
+			case 0x0200:
+					printf("Mifare One(S70) \r\n");
+					break;
+			case 0x0800:
+					printf("Mifare Pro(X) \r\n");
+					break;
+			case 0x4403:
+					printf("Mifare DESFire \r\n");
+					break;
+			default:
+					printf("Unknown Card \r\n");
+					continue;
+			}
+			//delay_ms(10);
+			status = PcdAnticoll(Card_ID);//防冲撞
+			if(status != MI_OK){
+					printf("Anticoll Error\n\r");
+					continue;
+			}else{
+					printf("Serial Number:%02X%02X%02X%02X\n\r",Card_ID[0],Card_ID[1],Card_ID[2],Card_ID[3]);
+			}
+		}
+	}
+
+	
+
 }
 
 void test_usart(void)
