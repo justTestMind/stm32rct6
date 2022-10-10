@@ -20,6 +20,8 @@
 
 #include "./usart_dma/usart_dma.h"
 
+#include "./bluetooth/blue_tooth.h"
+
 int main(void)
 {
 	rcc_clock_setup_in_hse_8mhz_out_72mhz();
@@ -39,6 +41,9 @@ int main(void)
 	//test_usart();
 	//test_usart_dma();
 	testrc522();
+
+	//test_blur_tooth();
+
 }
 
 void testrc522(void){
@@ -50,6 +55,7 @@ void testrc522(void){
 	uint8_t Card_Data[16];
 	uint8_t status;
 	uint8_t addr;
+	RC522_IO_Init();
 	printf("要开始读卡了 \r\n");
 	PcdReset();
 	PcdAntennaOff();
