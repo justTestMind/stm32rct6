@@ -7,7 +7,7 @@
 #include "./bsp_exti.h"
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/stm32/exti.h>
-#include "./usart.h"
+#include "../usart/usart.h"
 
 uint16_t exti_line_state;
 
@@ -60,6 +60,20 @@ void EXTI_Key_Config(void)
     gpio_setup();
 	exti_setup();
 
+}
+
+
+void TestExti()
+{
+	EXTI_Key_Config();
+
+	while (1)
+	{
+		gpio_toggle(GPIOA, GPIO8);
+		delay_ms(5000);
+		gpio_toggle(GPIOA, GPIO8);
+		delay_ms(5000);
+	}
 }
 
 

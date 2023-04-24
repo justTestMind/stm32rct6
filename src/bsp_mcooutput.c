@@ -14,3 +14,17 @@ void MCO_GPIO_Config(void)
 }
 
 
+void TestMCO()
+{
+
+	MCO_GPIO_Config();
+	rcc_set_mco(RCC_CFGR_MCO_HSE);
+	while (1)
+	{
+
+		gpio_toggle(GPIOC, GPIO2);
+		delay_ms(3000);
+		gpio_toggle(GPIOC, GPIO2);
+		delay_ms(3000);
+	}
+}

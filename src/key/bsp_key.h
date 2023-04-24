@@ -13,12 +13,13 @@
 
 
 //按键影响端口相关配置
-#define EFFECT_GPIO_PORT GPIOC
-#define EFFECT_GPIO_CLK RCC_GPIOC
-#define EFFECT_GPIO_PIN GPIO13
+#define EFFECT_GPIO_PORT GPIOA
+#define EFFECT_GPIO_CLK RCC_GPIOA
+#define EFFECT_GPIO_PIN GPIO8
 
 
 
 void Key_GPIO_Config(void);
 uint8_t Key_Scan(uint_fast32_t GPIOx,uint16_t GPIO_Pin);
+void TestKey(void);
 #endif

@@ -5,7 +5,7 @@
 
 #include "./rc522.h"
 #include <libopencm3/stm32/spi.h>
-#include "../delay.h"
+#include "../delay/delay.h"
 
 void spi_setup(void)
 {
@@ -19,7 +19,7 @@ void spi_setup(void)
 				  GPIO_CNF_OUTPUT_PUSHPULL, GPIO4 | GPIO5 | GPIO7| GPIO1);
 
 	gpio_set_mode(GPIOA, GPIO_MODE_INPUT, GPIO_CNF_INPUT_PULL_UPDOWN, GPIO6);
-	gpio_set(GPIOA, GPIO6);
+	//gpio_set(GPIOA, GPIO6);
 
 	/* Reset SPI, SPI_CR1 register cleared, SPI is disabled */
 	spi_reset(SPI1);

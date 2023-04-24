@@ -5,9 +5,8 @@
 
 //抽离usart 信息
 
-
-
 void usart_setup(void);
 
+int usart_print(char* str);
 
 #endif

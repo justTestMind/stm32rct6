@@ -6,12 +6,14 @@
 //初始化时钟
 void delay_setup(void)
 {
+	//选择时钟源
 	systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
 	
 }
 
 void delay_us(uint16_t us) {
 	delay_setup();
+	//这里应跟据所选时钟源 来确定计数数值
     systick_set_reload(72);
 	systick_clear();
 	systick_interrupt_enable();

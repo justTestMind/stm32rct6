@@ -30,3 +30,30 @@ uint8_t Key_Scan(uint_fast32_t GPIOx, uint16_t GPIO_Pin)
 
 	return KEY_OFF;
 }
+
+
+void TestKey()
+{
+	Key_GPIO_Config();
+	
+	int a = 0;
+	while (1)
+	{
+		if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON)
+		{
+		
+			if(a== 0){
+				a = 1;
+				gpio_toggle(EFFECT_GPIO_PORT, EFFECT_GPIO_PIN);
+				printf("温度：  湿度: n");
+			}
+		}
+
+		if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_OFF)
+		{
+			a=0;
+		}
+
+		
+	}
+}

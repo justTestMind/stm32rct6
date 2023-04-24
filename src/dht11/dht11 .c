@@ -1,7 +1,7 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 #include "./dht11.h"
-#include "./delay.h"
+#include "../delay/delay.h"
 #include <stdio.h>
 
 uint16_t DHT11_DQ_IN()
@@ -121,4 +121,16 @@ uint8_t DHT11_Read_Data(uint8_t *temp, uint8_t *humi)
         return 1;
     };
     return 0;
+}
+
+
+void TestDHT11(void)
+{
+	uint8_t tempetature, humidity;
+
+	while (1)
+	{
+		DHT11_Read_Data(&tempetature, &humidity);
+		printf("温度： %d\t 湿度: %d\n", tempetature, humidity);
+	}
 }

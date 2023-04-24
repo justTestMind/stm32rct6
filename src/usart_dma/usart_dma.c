@@ -3,8 +3,8 @@
 #include <libopencm3/stm32/usart.h>
 #include <libopencm3/stm32/dma.h>
 #include <libopencm3/cm3/nvic.h>
-#include "../delay.h"
-#include "./usart.h"
+#include "../delay/delay.h"
+#include "../usart/usart.h"
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/stm32/exti.h>
 void dma_write(char *data, int size)
