@@ -117,7 +117,7 @@ void test_one(void)
         delay_ms(1000);
     }
 
-    return 0;
+    return ;
 }
 //dma 写数据 在 dma write 收到数据后 更改dma 写的数据
 void test_two(void)
@@ -136,7 +136,8 @@ void test_two(void)
 
     char tx[10] = "abcdefg\r\n";
     int tx_len = 10;
-    char rx[7] = "fffffff";
+    //fffffff
+    char rx[7] = "ffffff";
     int rx_len = 6;
 
     transfered = 0;
@@ -178,5 +179,5 @@ void test_usart_dma(void)
     test_one();
     //test_two();
 
-    return 0;
+    return;
 }

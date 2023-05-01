@@ -42,13 +42,13 @@ void testrc522(void){
 
 	while(1)
 	{
-		usart_print("要开始读卡了111  \r\n");
+		usart_print("要开始读卡了111 %d \r\n");
 		delay_ms(1000);
 		if(MI_OK==PcdRequest(PICC_REQALL, Card_Type1))
 		{
 			uint16_t cardType = (Card_Type1[0]<<8)|Card_Type1[1];
 			//sprintf(print_buf, "Card Type(0x%04X):",cardType);
-			printf("Card Type(0x%04X):",cardType);
+			//printf("Card Type(0x%04X):",cardType);
 			switch(cardType){
 			case 0x4400:
 					usart_print("Mifare UltraLight \r\n");
@@ -97,15 +97,21 @@ int main(void)
 	// TestDHT11();
 	//  TestBeep();
 	//TestKey();
-	testrc522();
+	//testrc522();
 	//  TestMCO();
 	 // TestExti();
-	// TestOLED();
+
+	TestOLED();
 	// test_usart();
 	// test_usart_dma();
 	 //testrc522();
 
 	// test_blur_tooth();
+	//rcc_periph_clock_enable(rcc_apb)
+	// rcc_periph_clock_enable(RCC_GPIOA);
+	// gpio_set_mode(GPIOA,GPIO_MODE_OUTPUT_50_MHZ,GPIO_CNF_OUTPUT_PUSHPULL,GPIO8);
+	
+	
 }
 
 

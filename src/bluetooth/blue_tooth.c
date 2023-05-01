@@ -8,6 +8,8 @@
 #include <libopencm3/stm32/exti.h>
 #include <libopencm3/cm3/nvic.h>
 
+#include "../delay/delay.h"
+
 void test_blur_tooth(void){
 	//运行代码等待蓝牙做出响应
 	rcc_periph_clock_enable(RCC_AFIO);

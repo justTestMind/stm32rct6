@@ -18,9 +18,6 @@
 #define OLED_SDA_Clr() gpio_clear(OLED_SDA_GPIO,OLED_SDA_GPIO_PIN)//DIN
 #define OLED_SDA_Set() gpio_set(OLED_SDA_GPIO,OLED_SDA_GPIO_PIN)
 
-#define OLED_RES_Clr() gpio_clear(GPIOD,GPIO2)//RES
-#define OLED_RES_Set() gpio_set(GPIOD,GPIO2)
-
 
 #define OLED_CMD  0	//写命令
 #define OLED_DATA 1	//写数据
@@ -48,6 +45,6 @@ void OLED_ShowChinese(uint16_t x,uint16_t y,uint16_t num,uint16_t size1,uint16_t
 void OLED_ScrollDisplay(uint16_t num,uint16_t space,uint16_t mode);
 void OLED_ShowPicture(uint16_t x,uint16_t y,uint16_t sizex,uint16_t sizey,uint8_t BMP[],uint16_t mode);
 void OLED_Init(void);
-
+void TestOLED();
 #endif
 

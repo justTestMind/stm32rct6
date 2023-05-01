@@ -8,6 +8,7 @@
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/stm32/exti.h>
 #include "../usart/usart.h"
+#include "../delay/delay.h"
 
 uint16_t exti_line_state;
 

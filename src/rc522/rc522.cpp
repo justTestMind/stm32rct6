@@ -9,30 +9,33 @@
 
 void spi_setup(void)
 {
-
+	
 	rcc_periph_clock_enable(RCC_GPIOA);
+	rcc_periph_clock_enable(RCC_AFIO);
 	rcc_periph_clock_enable(RCC_SPI1);
 
 	
 	/* Configure GPIOs: SS=PA4, SCK=PA5, MISO=PA6 and MOSI=PA7 */
-	gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ,
-				  GPIO_CNF_OUTPUT_PUSHPULL, GPIO4 | GPIO5 | GPIO7| GPIO1);
+	 gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ,
+            GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO4 |
+            								GPIO5 |
+                                            GPIO7 );
 
-	gpio_set_mode(GPIOA, GPIO_MODE_INPUT, GPIO_CNF_INPUT_PULL_UPDOWN, GPIO6);
-	//gpio_set(GPIOA, GPIO6);
 
-	/* Reset SPI, SPI_CR1 register cleared, SPI is disabled */
-	spi_reset(SPI1);
+	//gpio_set
 
-	/* Set up SPI in Master mode with:
-	 * Clock baud rate: 1/64 of peripheral clock frequency
-	 * Clock polarity: Idle High
-	 * Clock phase: Data valid on 2nd clock pulse
-	 * Data frame format: 8-bit
-	 * Frame format: MSB First
-	 */
+  gpio_set_mode(GPIOA, GPIO_MODE_INPUT, GPIO_CNF_INPUT_FLOAT,
+          GPIO6);
+
+		  spi_reset(SPI1);
+		  //SPI_CR1_SSI
+		//spi_set_nss_high
+  /* Reset SPI, SPI_CR1 register cleared, SPI is disabled */
+  //rcc_periph_reset_pulse(RST_SPI1);
 	spi_init_master(SPI1, SPI_CR1_BAUDRATE_FPCLK_DIV_32, SPI_CR1_CPOL_CLK_TO_0_WHEN_IDLE,
 					SPI_CR1_CPHA_CLK_TRANSITION_1, SPI_CR1_DFF_8BIT, SPI_CR1_MSBFIRST);
+	//设置全双式模式
+	spi_set_bidirectional_mode(SPI1);
 
 	/*
 	 * Set NSS management to software.
@@ -42,11 +45,13 @@ void spi_setup(void)
 	 * ourselves this bit needs to be at least set to 1, otherwise the spi
 	 * peripheral will not send any data out.
 	 */
-	spi_enable_software_slave_management(SPI1);
-	spi_set_nss_high(SPI1);
+	//spi_enable_software_slave_management(SPI1);
+	
+	spi_enable(SPI1);
+	//spi_set_nss_high(SPI1);
 
 	/* Enable SPI1 periph. */
-	spi_enable(SPI1);
+	
 }
 void RC522_IO_Init(void)
 {
@@ -439,11 +444,11 @@ uint8_t ReadRawRC(uint8_t Address)
 	uint8_t ucResult=0;
 	ucAddr = ((Address<<1)&0x7E)|0x80;
 	delay_ms(1);
-	RC522_ENABLE;
+	//使能
 	spi_xfer(SPI1,ucAddr);
 	delay_us(50);
 	ucResult = spi_xfer(SPI1,ucAddr);
-	RC522_DISABLE;
+	//取消片选
 	return ucResult;
 }
 
@@ -460,16 +465,18 @@ void WriteRawRC(uint8_t Address, uint8_t value)
 	write_buffer[0] = ucAddr;
 	write_buffer[1] = value;
 	delay_ms(1);
-	RC522_ENABLE;
+	//使能  
 	spi_xfer(SPI1,write_buffer[0]);
 	spi_xfer(SPI1,write_buffer[1]);
-	RC522_DISABLE;
+	
+	//取消片选
+	//spi_set_nss_high(SPI1);
 }
 
 /////////////////////////////////////////////////////////////////////
 //功    能：置RC522寄存器位
 //参数说明：reg[IN]:寄存器地址
-//          mask[IN]:置位值
+//mask[IN]:置位值
 /////////////////////////////////////////////////////////////////////
 void SetBitMask(uint8_t reg,uint8_t mask)  
 {

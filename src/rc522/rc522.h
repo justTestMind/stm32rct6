@@ -9,9 +9,6 @@
 #define RC522_RESET_SET()               gpio_set(RC522_RESET_GPIO_PORT,RC522_RESET_PIN) 
 #define RC522_RESET_CLEAR()             gpio_clear(RC522_RESET_GPIO_PORT,RC522_RESET_PIN)
 
-#define RC522_ENABLE                    gpio_clear(GPIOA,GPIO1)
-#define RC522_DISABLE                   gpio_set(GPIOA,GPIO1)
-
 
 
 
