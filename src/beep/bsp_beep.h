@@ -12,4 +12,5 @@
 #define OFF 0
 void BEEP_GPIO_Config(void);
 void BEEP(int status);
+void TestBeep(void);
 #endif

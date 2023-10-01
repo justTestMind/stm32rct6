@@ -24,11 +24,13 @@ void usart_setup(void)
 	usart_set_stopbits(USART1, USART_STOPBITS_1);
 	usart_set_mode(USART1, USART_MODE_TX_RX);
 	usart_set_parity(USART1, USART_PARITY_NONE);
+	//rcc_periph_clock_enable(RCC_AFIO);
 	usart_set_flow_control(USART1, USART_FLOWCONTROL_NONE);
 
 	/* Finally enable the USART. */
 	usart_enable(USART1);
 }
+//用于c语言的串口打印
 int _write(int file, char *ptr, int len)
 {
 	int i;
@@ -44,25 +46,27 @@ int _write(int file, char *ptr, int len)
 	return -1;
 }
 
-
-// ssize_t write(int filedes, const void *buf, size_t nbytes)
-// {
-// 	int i;
-
-// 	if (filedes == 1)
-// 	{
-// 		for (i = 0; i < nbytes; i++)
-// 			usart_send_blocking(USART1, buf[i]);
-// 		return i;
-// 	}
-
-// 	errno = EIO;
-// 	return -1;
-// }
+ void uart1_puts(const char *str){
+	
+	const char* p = NULL;
+	for(p = str;*p;p++){
+		usart_send_blocking(USART1, *p);
+	}
+ }
 
 
-
-int sprintf(char * buf, const char *fmt, ...)
+int uart_print(char * buf, const char *fmt, ...)
+{
+	va_list args;
+	int i;
+	va_start(args, fmt);
+	i=vsprintf(buf,fmt,args);
+	va_end(args);
+	uart1_puts(buf);
+	return i;
+}
+//用于
+int uart_println(char * buf, const char *fmt, ...)
 {
 	va_list args;
 	int i;
@@ -70,20 +74,19 @@ int sprintf(char * buf, const char *fmt, ...)
 	va_start(args, fmt);
 	i=vsprintf(buf,fmt,args);
 	va_end(args);
-	return i;
+	buf = strcat(buf,"\r\n");
+	uart1_puts(buf);
+
+	return i+2;
 }
 
-int usart_print(char* str)
-{
-  int i = 0;
+// int fputc(int ch, FILE *f)
+// {
+//       //HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1,HAL_MAX_DELAY);
+// 	  usart_send_blocking(USART1, ch);
+//       return  EOF;
+// }
 
-  while(str[i] != '\0')
-  {
-    usart_send_blocking(USART1, str[i++]);
-  }
-
-  return i;
-}
 
 // void test_usart(void)
 // {
@@ -121,4 +124,6 @@ int usart_print(char* str)
 // 		printf("rct6 收到指令 %x \r\n", t);
 // 	}
 // }
+
+
 

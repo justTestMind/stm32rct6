@@ -17,4 +17,6 @@ uint8_t DHT11_Read_Bit(void);
 uint8_t DHT11_Check(void);
 void DHT11_Rst(void);
 
+void TestDHT11(void);
+
 #endif

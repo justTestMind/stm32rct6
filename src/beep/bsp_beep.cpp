@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include "./bsp_beep.h"
+#include "../delay/delay.h"
+
 
 void BEEP_GPIO_Config(void)
 {
@@ -22,6 +24,27 @@ void BEEP(int status)
 	}else{
 		printf("输出低电平 响\r\n");
 		gpio_clear(BEEP_GPIO_PORT,BEEP_GPIO_PIN);
+	}
+}
+
+
+
+// /**
+//  *测试蜂鸣器
+//  **/
+void TestBeep(void)
+{
+	BEEP_GPIO_Config();
+	// gpio_set_mode(GPIOC,GPIO_MODE_OUTPUT_50_MHZ,GPIO_CNF_OUTPUT_PUSHPULL,GPIO2);
+	while (1)
+	{
+
+		BEEP(ON);
+		gpio_toggle(GPIOC, GPIO2);
+		delay_ms(3000);
+		BEEP(OFF);
+		gpio_toggle(GPIOC, GPIO2);
+		delay_ms(3000);
 	}
 }
 

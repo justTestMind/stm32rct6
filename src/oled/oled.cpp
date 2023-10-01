@@ -103,7 +103,7 @@ void Send_Byte(uint16_t dat)
 // mode:数据/命令标志  0,表示命令1,表示数据;
 void OLED_WR_Byte(uint16_t dat, uint16_t mode)
 {
-	gpio_toggle(GPIOA, GPIO8);
+	
 	I2C_Start();
 	Send_Byte(0x78);
 	I2C_WaitAck();
@@ -519,36 +519,36 @@ void OLED_Init(void)
 	gpio_set_mode(OLED_SDA_GPIO, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_OPENDRAIN, OLED_SDA_GPIO_PIN);
 	gpio_set(OLED_SDA_GPIO, OLED_SDA_GPIO_PIN);
 	gpio_set(OLED_SCL_GPIO, OLED_SCL_GPIO_PIN);
-
-	// OLED_WR_Byte(0xAE,OLED_CMD);//--turn off oled panel
-	//  OLED_WR_Byte(0x00,OLED_CMD);//---set low column address
-	//  OLED_WR_Byte(0x10,OLED_CMD);//---set high column address
-	//  OLED_WR_Byte(0x40,OLED_CMD);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
-	//  OLED_WR_Byte(0x81,OLED_CMD);//--set contrast control register
-	//  OLED_WR_Byte(0xCF,OLED_CMD);// Set SEG Output Current Brightness
-	//  OLED_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping     0xa0 左右反置 0xa1正常
-	//  OLED_WR_Byte(0xC8,OLED_CMD);//Set COM/Row Scan Direction   oxc0 上下反置 0xc8正常
-	//  OLED_WR_Byte(0xA6,OLED_CMD);//--set normal display
-	//  OLED_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
-	//  OLED_WR_Byte(0x3f,OLED_CMD);//--1/64 duty
-	//  OLED_WR_Byte(0xD3,OLED_CMD);//-set display offset	Shift Mapping RAM Counter (0x00~0x3F)
-	//  OLED_WR_Byte(0x00,OLED_CMD);//-not offset
-	//  OLED_WR_Byte(0xd5,OLED_CMD);//--set display clock divide ratio/oscillator frequency
-	//  OLED_WR_Byte(0x80,OLED_CMD);//--set divide ratio, Set Clock as 100 Frames/Sec
-	//  OLED_WR_Byte(0xD9,OLED_CMD);//--set pre-charge period
-	//  OLED_WR_Byte(0xF1,OLED_CMD);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
-	//  OLED_WR_Byte(0xDA,OLED_CMD);//--set com pins hardware configuration
-	//  OLED_WR_Byte(0x12,OLED_CMD);
-	//  OLED_WR_Byte(0xDB,OLED_CMD);//--set vcomh
-	//  OLED_WR_Byte(0x40,OLED_CMD);//Set VCOM Deselect Level
-	//  OLED_WR_Byte(0x20,OLED_CMD);//-Set Page Addressing Mode (0x00/0x01/0x02)
-	//  OLED_WR_Byte(0x02,OLED_CMD);//
-	//  OLED_WR_Byte(0x8D,OLED_CMD);//--set Charge Pump enable/disable
-	//  OLED_WR_Byte(0x14,OLED_CMD);//--set(0x10) disable
-	//  OLED_WR_Byte(0xA4,OLED_CMD);// Disable Entire Display On (0xa4/0xa5)
-	//  OLED_WR_Byte(0xA6,OLED_CMD);// Disable Inverse Display On (0xa6/a7)
-	//  OLED_Clear();
-	//  OLED_WR_Byte(0xAF,OLED_CMD);
+	//可以试下只发一次开始信号 之后一直传数据
+	OLED_WR_Byte(0xAE,OLED_CMD);//--turn off oled panel
+	 OLED_WR_Byte(0x00,OLED_CMD);//---set low column address
+	 OLED_WR_Byte(0x10,OLED_CMD);//---set high column address
+	 OLED_WR_Byte(0x40,OLED_CMD);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+	 OLED_WR_Byte(0x81,OLED_CMD);//--set contrast control register
+	 OLED_WR_Byte(0xCF,OLED_CMD);// Set SEG Output Current Brightness
+	 OLED_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping     0xa0 左右反置 0xa1正常
+	 OLED_WR_Byte(0xC8,OLED_CMD);//Set COM/Row Scan Direction   oxc0 上下反置 0xc8正常
+	 OLED_WR_Byte(0xA6,OLED_CMD);//--set normal display
+	 OLED_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
+	 OLED_WR_Byte(0x3f,OLED_CMD);//--1/64 duty
+	 OLED_WR_Byte(0xD3,OLED_CMD);//-set display offset	Shift Mapping RAM Counter (0x00~0x3F)
+	 OLED_WR_Byte(0x00,OLED_CMD);//-not offset
+	 OLED_WR_Byte(0xd5,OLED_CMD);//--set display clock divide ratio/oscillator frequency
+	 OLED_WR_Byte(0x80,OLED_CMD);//--set divide ratio, Set Clock as 100 Frames/Sec
+	 OLED_WR_Byte(0xD9,OLED_CMD);//--set pre-charge period
+	 OLED_WR_Byte(0xF1,OLED_CMD);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+	 OLED_WR_Byte(0xDA,OLED_CMD);//--set com pins hardware configuration
+	 OLED_WR_Byte(0x12,OLED_CMD);
+	 OLED_WR_Byte(0xDB,OLED_CMD);//--set vcomh
+	 OLED_WR_Byte(0x40,OLED_CMD);//Set VCOM Deselect Level
+	 OLED_WR_Byte(0x20,OLED_CMD);//-Set Page Addressing Mode (0x00/0x01/0x02)
+	 OLED_WR_Byte(0x02,OLED_CMD);//
+	 OLED_WR_Byte(0x8D,OLED_CMD);//--set Charge Pump enable/disable
+	 OLED_WR_Byte(0x14,OLED_CMD);//--set(0x10) disable
+	 OLED_WR_Byte(0xA4,OLED_CMD);// Disable Entire Display On (0xa4/0xa5)
+	 OLED_WR_Byte(0xA6,OLED_CMD);// Disable Inverse Display On (0xa6/a7)
+	 OLED_Clear();
+	 OLED_WR_Byte(0xAF,OLED_CMD);
 }
 
 void TestOLED()
@@ -564,47 +564,79 @@ void TestOLED()
 	{
 
 		delay_ms(1000);
+		gpio_toggle(GPIOA, GPIO8);
 
-		OLED_ColorTurn(0);
-		OLED_ShowPicture(0, 0, 128, 64, BMP1, 1);
-		OLED_Refresh();
-		delay_ms(3000);
-		OLED_ShowPicture(0, 0, 128, 64, BMP2, 1);
-		OLED_Refresh();
-		delay_ms(3000);
-		OLED_Clear();
-		OLED_ShowChinese(0, 0, 0, 16, 1);	// 中
-		OLED_ShowChinese(18, 0, 1, 16, 1);	// 景
-		OLED_ShowChinese(36, 0, 2, 16, 1);	// 园
-		OLED_ShowChinese(54, 0, 3, 16, 1);	// 电
-		OLED_ShowChinese(72, 0, 4, 16, 1);	// 子
-		OLED_ShowChinese(90, 0, 5, 16, 1);	// 技
-		OLED_ShowChinese(108, 0, 6, 16, 1); // 术
-		OLED_ShowString(8, 16, "ZHONGJINGYUAN", 16, 1);
-		OLED_ShowString(20, 32, "2014/05/01", 16, 1);
-		OLED_ShowString(0, 48, "ASCII:", 16, 1);
-		OLED_ShowString(63, 48, "CODE:", 16, 1);
-		OLED_ShowChar(48, 48, t, 16, 1); // 显示ASCII字符
-		t++;
-		if (t > '~')
-			t = ' ';
-		OLED_ShowNum(103, 48, t, 3, 16, 1);
-		OLED_Refresh();
-		delay_ms(5000);
-		OLED_Clear();
-		OLED_ShowChinese(0, 0, 0, 16, 1);	// 16*16 中
-		OLED_ShowChinese(16, 0, 0, 24, 1);	// 24*24 中
-		OLED_ShowChinese(24, 20, 0, 32, 1); // 32*32 中
-		OLED_ShowChinese(64, 0, 0, 64, 1);	// 64*64 中
-		OLED_Refresh();
-		delay_ms(5000);
-		OLED_Clear();
-		OLED_ShowString(0, 0, "ABC", 8, 1);	  // 6*8 "ABC"
-		OLED_ShowString(0, 8, "ABC", 12, 1);  // 6*12 "ABC"
-		OLED_ShowString(0, 20, "ABC", 16, 1); // 8*16 "ABC"
-		OLED_ShowString(0, 36, "ABC", 24, 1); // 12*24 "ABC"
-		OLED_Refresh();
-		delay_ms(5000);
-		OLED_ScrollDisplay(11, 4, 1);
+		OLED_WR_Byte(0xAE,OLED_CMD);//--turn off oled panel
+	 OLED_WR_Byte(0x00,OLED_CMD);//---set low column address
+	 OLED_WR_Byte(0x10,OLED_CMD);//---set high column address
+	 OLED_WR_Byte(0x40,OLED_CMD);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+	 OLED_WR_Byte(0x81,OLED_CMD);//--set contrast control register
+	 OLED_WR_Byte(0xCF,OLED_CMD);// Set SEG Output Current Brightness
+	 OLED_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping     0xa0 左右反置 0xa1正常
+	 OLED_WR_Byte(0xC8,OLED_CMD);//Set COM/Row Scan Direction   oxc0 上下反置 0xc8正常
+	 OLED_WR_Byte(0xA6,OLED_CMD);//--set normal display
+	 OLED_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
+	 OLED_WR_Byte(0x3f,OLED_CMD);//--1/64 duty
+	 OLED_WR_Byte(0xD3,OLED_CMD);//-set display offset	Shift Mapping RAM Counter (0x00~0x3F)
+	 OLED_WR_Byte(0x00,OLED_CMD);//-not offset
+	 OLED_WR_Byte(0xd5,OLED_CMD);//--set display clock divide ratio/oscillator frequency
+	 OLED_WR_Byte(0x80,OLED_CMD);//--set divide ratio, Set Clock as 100 Frames/Sec
+	 OLED_WR_Byte(0xD9,OLED_CMD);//--set pre-charge period
+	 OLED_WR_Byte(0xF1,OLED_CMD);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+	 OLED_WR_Byte(0xDA,OLED_CMD);//--set com pins hardware configuration
+	 OLED_WR_Byte(0x12,OLED_CMD);
+	 OLED_WR_Byte(0xDB,OLED_CMD);//--set vcomh
+	 OLED_WR_Byte(0x40,OLED_CMD);//Set VCOM Deselect Level
+	 OLED_WR_Byte(0x20,OLED_CMD);//-Set Page Addressing Mode (0x00/0x01/0x02)
+	 OLED_WR_Byte(0x02,OLED_CMD);//
+	 OLED_WR_Byte(0x8D,OLED_CMD);//--set Charge Pump enable/disable
+	 OLED_WR_Byte(0x14,OLED_CMD);//--set(0x10) disable
+	 OLED_WR_Byte(0xA4,OLED_CMD);// Disable Entire Display On (0xa4/0xa5)
+	 OLED_WR_Byte(0xA6,OLED_CMD);// Disable Inverse Display On (0xa6/a7)
+	 OLED_Clear();
+	 OLED_WR_Byte(0xAF,OLED_CMD);
+		
+
+		// OLED_ColorTurn(0);
+		// OLED_ShowPicture(0, 0, 128, 64, BMP1, 1);
+		// OLED_Refresh();
+		// delay_ms(3000);
+		// OLED_ShowPicture(0, 0, 128, 64, BMP2, 1);
+		// OLED_Refresh();
+		// delay_ms(3000);
+		// OLED_Clear();
+		// OLED_ShowChinese(0, 0, 0, 16, 1);	// 中
+		// OLED_ShowChinese(18, 0, 1, 16, 1);	// 景
+		// OLED_ShowChinese(36, 0, 2, 16, 1);	// 园
+		// OLED_ShowChinese(54, 0, 3, 16, 1);	// 电
+		// OLED_ShowChinese(72, 0, 4, 16, 1);	// 子
+		// OLED_ShowChinese(90, 0, 5, 16, 1);	// 技
+		// OLED_ShowChinese(108, 0, 6, 16, 1); // 术
+		// OLED_ShowString(8, 16, "ZHONGJINGYUAN", 16, 1);
+		// OLED_ShowString(20, 32, "2014/05/01", 16, 1);
+		// OLED_ShowString(0, 48, "ASCII:", 16, 1);
+		// OLED_ShowString(63, 48, "CODE:", 16, 1);
+		// OLED_ShowChar(48, 48, t, 16, 1); // 显示ASCII字符
+		// t++;
+		// if (t > '~')
+		// 	t = ' ';
+		// OLED_ShowNum(103, 48, t, 3, 16, 1);
+		// OLED_Refresh();
+		// delay_ms(5000);
+		// OLED_Clear();
+		// OLED_ShowChinese(0, 0, 0, 16, 1);	// 16*16 中
+		// OLED_ShowChinese(16, 0, 0, 24, 1);	// 24*24 中
+		// OLED_ShowChinese(24, 20, 0, 32, 1); // 32*32 中
+		// OLED_ShowChinese(64, 0, 0, 64, 1);	// 64*64 中
+		// OLED_Refresh();
+		// delay_ms(5000);
+		// OLED_Clear();
+		// OLED_ShowString(0, 0, "ABC", 8, 1);	  // 6*8 "ABC"
+		// OLED_ShowString(0, 8, "ABC", 12, 1);  // 6*12 "ABC"
+		// OLED_ShowString(0, 20, "ABC", 16, 1); // 8*16 "ABC"
+		// OLED_ShowString(0, 36, "ABC", 24, 1); // 12*24 "ABC"
+		// OLED_Refresh();
+		// delay_ms(5000);
+		// OLED_ScrollDisplay(11, 4, 1);
 	}
 }

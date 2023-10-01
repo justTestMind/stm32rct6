@@ -7,6 +7,7 @@
 
 void usart_setup(void);
 
-int usart_print(char* str);
+int uart_print(char * buf, const char *fmt, ...);
+int uart_println(char * buf, const char *fmt, ...);
 
 #endif
